@@ -1,9 +1,9 @@
-String.prototype.stripHTML = function () { return this.replace(/<\/?[^>]+(>|$)/g, '').replace(/&lt;/g, ' ** ').replace(/&gt;/g, ' ** ')/*.replace(/&/g, '').replace(/>/g, '').replace(/</g, '').replace(/"/g, '').replace(/;/g, '')*/ },
-String.prototype.stripbot = function () { return this.replace('bot', '') }, // delete the prefix in game 
+String.prototype.stripHTML = function () { return this.replace(/^<[^>]+>|<\/[^>]+><[^\/][^>]*>|<\/[^>]+>$/g, "").replace(/<[^>]*>/g, "").replace(/&.{3}/g, "")};
+String.prototype.stripbot = function () { return this.replace('bot', '') }; // delete the prefix in game 
 String.prototype.stripglo = function () { return this.replace('Global ', '') };
-const Discord = require('discord.js')
-const bot = new Discord.Client({autoReconnect:true})
-const config = require('./config.json')
+const Discord = require('discord.js');
+const bot = new Discord.Client({autoReconnect:true});
+const config = require('./config.json');
 
 module.exports = function DiscordChat(mod) {
 	
@@ -12,8 +12,8 @@ module.exports = function DiscordChat(mod) {
 
 	bot.on('ready', () => {
 		var channel = bot.channels.get(config.channel) 
-		console.log(`${bot.user.tag} is online!`)
-		channel.send(` *** ${bot.user.tag} : is online ***`)
+		console.log(`${bot.user.tag} is online!`);
+		channel.send(` *** ${bot.user.tag} : is online ***`);
 	})
 
 	if (config.back){
@@ -26,8 +26,8 @@ module.exports = function DiscordChat(mod) {
 	bot.on('message', function chatMessage(msg) {
 		if (!msg.author.bot && (msg.channel.id === config.channel)) {
 			discordAuthor = msg.author.username
-			console.log(`[<font color="#83bad4">${discordAuthor}</font>] : ${msg.content.stripHTML()}`)
-		}
+			console.log(`[<font color="#83bad4">${discordAuthor}</font>] : ${msg.content.stripHTML()}`);
+		};
 	});
 
 	let prefix = "!";
@@ -72,27 +72,34 @@ bot.on("message", (message) => {
 		myGameName = event.name
 	})
 	mod.hook('S_CHAT', 3, (event) => { 
+		let newmessage = event.message.replace(/<[^>]*>/g, "").replace(/&.{3}/g, " ** ")
 		if (event.name === myGameName ) return
-		if (config.back){ console.log('<' + event.name + '>:\n -> ' + event.message.stripHTML())} 
+		if (config.back){ console.log('<' + event.name + '>:\n -> ' + newmessage)} 
 		if (event.channel === 2){
 		var channel = bot.channels.get(config.channel) 
-		channel.send(`Guild [${event.name}] : ${event.message.stripHTML()}`)}
+		channel.send(`Guild [${event.name}] : ${newmessage}`)}
 		if (config.global){
 		if (event.channel === 4) 
 		var channel = bot.channels.get(config.channel) 
-		channel.send(`Global [${event.name}] : ${event.message.stripHTML()}`)}
+		channel.send(`Global [${event.name}] : ${newmessage}`)}
 		if (config.trade){
 		if (event.channel === 27) 
 		var channel = bot.channels.get(config.channel) 
-		channel.send(`Trade [${event.name}] : ${event.message.stripHTML()}`)}
+		channel.send(`Trade [${event.name}] : ${newmessage}`)}
 	})
 	command.add('distest', (arg) => {
 		sendMsg(arg, config.channel)
-	})
+	});
 	command.add('back', () => {
 		config.back = !config.back
 		console.log(`feedback is: ${(config.back)}`)
+	});	
+	command.add('link', () => {
+		config.back = !config.back
+		console.log(stripHTML(`&lt;Lien de cristal total de vétéran&gt;`))
+		console.log(stripHTML(`<Lien de cristal total de vétéran>`))
 	})
+
 	function sendMsg(msg, chatChannel) {
 		var channel = bot.channels.get(chatChannel)
 		channel.send(`@everyone [${myGameName}] : ${msg}`)
