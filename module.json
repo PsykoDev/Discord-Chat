@@ -3,5 +3,5 @@
     "name": "Discord-Chat",
     "author": "PsykoDev",
     "description": "Export whip / guild message into discord and you can write in discotd to send it in-game",
-    "servers": ["https://raw.githubusercontent.com/PsykoDev/Discord-Chat-2/master/"]
+    "servers": ["https://raw.githubusercontent.com/PsykoDev/Discord-Chat/master/"]
 }
