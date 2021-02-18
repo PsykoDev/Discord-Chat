@@ -1,9 +1,10 @@
 {
-	"back": false,
-	"global": false,
-	"trade": false,
-	"token": "NzYyNzg3NDM0NjA5OTAxNjE4.X3uPKA.-U1cTKnt1Cyihz7ZSoXHaaxIC58",
-	"channel": "762883314356715560",
-	"guild": 2,
-	"Glob": 27
+  "prefix": "!",
+  "back": false,
+  "global": false,
+  "trade": false,
+  "token": "NzYyNzg3NDM0NjA5OTAxNjE4.X3uPKA.-U1cTKnt1Cyihz7ZSoXHaaxIC58",
+  "channel": "811245588041433139",
+  "guild": 2,
+  "Glob": 27
 }
