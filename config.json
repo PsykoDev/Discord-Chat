@@ -3,8 +3,8 @@
   "back": false,
   "global": false,
   "trade": false,
-  "token": "",
-  "channel": "",
+  "token": "bot Token",
+  "channel": "Channel ID",
   "guild": 2,
   "Glob": 27
 }
